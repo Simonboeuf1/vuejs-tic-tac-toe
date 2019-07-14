@@ -9,7 +9,7 @@
         :x="tile.x" 
         :y="tile.y" 
         :value="tile.value"
-        v-on:play="({x, y}) => play(x, y)"
+        v-on:tileClick="({x, y}) => play(x, y)"
         />
     </div>
     <template v-if="finished">

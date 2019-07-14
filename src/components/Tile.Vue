@@ -1,6 +1,10 @@
 
 <template>
-  <span @click="() => this.$emit('play', {x: this.x, y: this.y})" class="tile" :style="{ top, left, width, height, fontSize }">
+  <span 
+    @click="handleClick" 
+    class="tile" 
+    :style="{ top, left, width, height, fontSize }"
+  >
     {{value}}
   </span>
 </template>
@@ -23,6 +27,11 @@ export default {
       width: `${TILE_SIZE}px`,
       height: `${TILE_SIZE}px`,
       fontSize: `${TILE_SIZE}px`
+    }
+  },
+  methods: {
+    handleClick: function() {
+      this.$emit('tileClick', {x: this.x, y: this.y})
     }
   }
 }
