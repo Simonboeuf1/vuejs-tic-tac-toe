@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    foobar
+    <Board />
   </div>
 </template>
 
 <script>
 
-import Board from "./components/Board.Vue"
+import Board from "./components/Board.vue"
 
 export default {
   name: 'app',

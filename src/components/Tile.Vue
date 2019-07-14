@@ -1,36 +1,36 @@
 
 <template>
-  <span class="tile" :style="{top: x, left: y}">
+  <span @click="() => this.$emit('play', {x: this.x, y: this.y})" class="tile" :style="{ top, left, width, height }">
     {{value}}
   </span>
 </template>
 
 <script>
 
-import { setTimeout } from "timers";
+import {TILE_SIZE} from "../constants";
 
 export default {
   name: 'Tile',
   props: {
-    value: {
-      type: String,
-      default: ''
-    },
-    x: {
-      type: number,
-      default: 0,
-    },
-    y: {
-      type: number,
-      default: 0
-    }
+    value: String,
+    x: Number,
+    y: Number
   },
+  data: function() {
+    return {
+      top: `${this.x * TILE_SIZE}px`,
+      left: `${this.y * TILE_SIZE}px`,
+      width: `${TILE_SIZE}px`,
+      height: `${TILE_SIZE}px`
+    }
+  }
 }
 
 </script>
 
 <style scoped>
-  .tile {
-    position: absolute;
-  }
+.tile {
+  position: absolute;
+  border: 1px solid black;
+}
 </style>
