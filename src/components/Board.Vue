@@ -1,6 +1,7 @@
 
 <template>
   <div class="game">
+    <h1>Current player : {{currentPlayerMarker}} </h1>
     <div class="board" :style="{width, height}">
       <Tile 
         v-for="tile in board" 
@@ -12,7 +13,7 @@
         />
     </div>
     <template v-if="finished">
-      <h1>{{finishedText}}</h1>
+      <h2>{{finishedText}}</h2>
       <button @click="initGame">New game</button>
     </template>
   </div>
@@ -24,7 +25,7 @@ import Tile from "./Tile.vue"
 import {BOARD_SIZE, TILE_SIZE} from "../constants";
 import {initPlayer, initTiles} from "../utils/init"
 import {isGameFinished, markTile, switchPlayer} from "../utils/game"
-import {findTile, isTileEmpty, hasWinner} from "../utils/board"
+import {findTile, isTileEmpty, hasWinner, getMarker} from "../utils/board"
 
 export default {
   name: 'Board',
@@ -38,6 +39,9 @@ export default {
     height: `${BOARD_SIZE * TILE_SIZE}px`,
   }),
   computed: {
+    currentPlayerMarker: function() {
+      return getMarker(this.currentPlayer);
+    },
     finished: function() {
       return this.isGameFinished()
     },
@@ -77,5 +81,15 @@ export default {
     position: relative;
     margin: auto auto;
     user-select: none;
+  }
+  h2 {
+    margin-bottom: 0;
+  }
+  button {
+    font-size: 1em;
+    margin: 1em;
+    padding: 0.25em 1em;
+    border: 2px solid black;
+    border-radius: 3px;
   }
 </style>
