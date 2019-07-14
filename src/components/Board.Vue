@@ -39,28 +39,28 @@ export default {
     height: `${BOARD_SIZE * TILE_SIZE}px`,
   }),
   computed: {
-    currentPlayerMarker: function() {
+    currentPlayerMarker() {
       return getMarker(this.currentPlayer);
     },
-    finished: function() {
+    finished() {
       return this.isGameFinished()
     },
-    finishedText: function() {
+    finishedText() {
       return hasWinner(this.board) ? `Player ${this.currentPlayer} won!` : 'Game drawn.'
     },
   },
   methods: {
-    switchPlayer: function() {
+    switchPlayer() {
       this.currentPlayer = switchPlayer(this.currentPlayer);
     },
-    isGameFinished: function() {
+    isGameFinished() {
       return isGameFinished(this.board);
     },
-    initGame: function() {
+    initGame() {
       this.currentPlayer = initPlayer();
       this.board = initTiles();
     },
-    play: function(x, y) {
+    play(x, y) {
       if(!this.finished) {
         const tile = findTile(this.board, x, y);
         if(isTileEmpty(tile)) {

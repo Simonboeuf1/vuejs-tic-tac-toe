@@ -20,7 +20,7 @@ export default {
     x: Number,
     y: Number
   },
-  data: function() {
+  data() {
     return {
       top: `${this.x * TILE_SIZE}px`,
       left: `${this.y * TILE_SIZE}px`,
@@ -30,7 +30,7 @@ export default {
     }
   },
   methods: {
-    handleClick: function() {
+    handleClick() {
       this.$emit('tileClick', {x: this.x, y: this.y})
     }
   }
