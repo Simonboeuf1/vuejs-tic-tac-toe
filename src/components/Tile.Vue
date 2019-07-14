@@ -1,6 +1,6 @@
 
 <template>
-  <span @click="() => this.$emit('play', {x: this.x, y: this.y})" class="tile" :style="{ top, left, width, height }">
+  <span @click="() => this.$emit('play', {x: this.x, y: this.y})" class="tile" :style="{ top, left, width, height, fontSize }">
     {{value}}
   </span>
 </template>
@@ -21,7 +21,8 @@ export default {
       top: `${this.x * TILE_SIZE}px`,
       left: `${this.y * TILE_SIZE}px`,
       width: `${TILE_SIZE}px`,
-      height: `${TILE_SIZE}px`
+      height: `${TILE_SIZE}px`,
+      fontSize: `${TILE_SIZE}px`
     }
   }
 }
@@ -30,6 +31,7 @@ export default {
 
 <style scoped>
 .tile {
+  line-height: 1.1;
   position: absolute;
   border: 1px solid black;
 }

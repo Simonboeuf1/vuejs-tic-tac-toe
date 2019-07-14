@@ -1,5 +1,5 @@
 export const BOARD_SIZE = 3;
-export const TILE_SIZE = 20;
+export const TILE_SIZE = 100;
 
 export const Players = Object.freeze({
   Player1: 1,
