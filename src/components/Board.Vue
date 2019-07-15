@@ -9,7 +9,7 @@
         :x="tile.x" 
         :y="tile.y" 
         :value="tile.value"
-        v-on:tileClick="({x, y}) => play(x, y)"
+        @tileClick="play"
         />
     </div>
     <template v-if="finished">
@@ -60,7 +60,7 @@ export default {
       this.currentPlayer = initPlayer();
       this.board = initTiles();
     },
-    play(x, y) {
+    play({x, y}) {
       if(!this.finished) {
         const tile = findTile(this.board, x, y);
         if(isTileEmpty(tile)) {
