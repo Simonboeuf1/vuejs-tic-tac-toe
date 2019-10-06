@@ -3,16 +3,16 @@
   <div class="game">
     <h1>Current player : {{currentPlayerMarker}} </h1>
     <div class="board" :style="{width, height}">
-      <Tile 
-        v-for="tile in board" 
-        :key="`x${tile.x}y${tile.y}`" 
-        :x="tile.x" 
-        :y="tile.y" 
+      <Tile
+        v-for="tile in board"
+        :key="`x${tile.x}y${tile.y}`"
+        :x="tile.x"
+        :y="tile.y"
         :value="tile.value"
         @tileClick="play"
         />
     </div>
-    <template v-if="finished">
+    <template v-if="isGameFinished">
       <h2>{{finishedText}}</h2>
       <button @click="initGame">New game</button>
     </template>
@@ -24,50 +24,46 @@
 import Tile from "./Tile.vue"
 import {BOARD_SIZE, TILE_SIZE} from "../constants";
 import {initPlayer, initTiles} from "../utils/init"
-import {isGameFinished, markTile, switchPlayer} from "../utils/game"
-import {findTile, isTileEmpty, hasWinner, getMarker} from "../utils/board"
+import {markTile, getNextPlayer} from "../utils/game"
+import {isTileEmpty, hasWinner, getMarker, isGameFinished} from "../utils/board"
 
 export default {
   name: 'Board',
   components: {
     Tile
   },
-  data: () => ({
-    currentPlayer: initPlayer(),
-    board: initTiles(),
-    width: `${BOARD_SIZE * TILE_SIZE}px`, // Pas moyen de faire mieux pour les constantes ? 
-    height: `${BOARD_SIZE * TILE_SIZE}px`,
-  }),
+  data() {
+    return {
+      currentPlayer: initPlayer(),
+      board: initTiles(),
+      width: `${BOARD_SIZE * TILE_SIZE}px`,
+      height: `${BOARD_SIZE * TILE_SIZE}px`,
+    }
+  },
   computed: {
     currentPlayerMarker() {
       return getMarker(this.currentPlayer);
     },
-    finished() {
-      return this.isGameFinished()
+    isGameFinished() {
+      return isGameFinished(this.board)
     },
     finishedText() {
       return hasWinner(this.board) ? `Player ${this.currentPlayer} won!` : 'Game drawn.'
     },
   },
   methods: {
-    switchPlayer() {
-      this.currentPlayer = switchPlayer(this.currentPlayer);
-    },
-    isGameFinished() {
-      return isGameFinished(this.board);
-    },
     initGame() {
       this.currentPlayer = initPlayer();
       this.board = initTiles();
     },
-    play({x, y}) {
-      if(!this.finished) {
-        const tile = findTile(this.board, x, y);
-        if(isTileEmpty(tile)) {
-          this.board = markTile(this.board, tile, this.currentPlayer);
-          if(!this.isGameFinished()) {
-            this.switchPlayer();
-          }
+    switchPlayer() {
+      this.currentPlayer = getNextPlayer(this.currentPlayer);
+    },
+    play(tile) {
+      if(!this.isGameFinished && isTileEmpty(tile)) {
+        this.board = markTile(this.board, tile, this.currentPlayer);
+        if(!this.isGameFinished) {
+          this.switchPlayer();
         }
       }
     },
